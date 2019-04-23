@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="js/lrscroll_1.js"></script>
     
     
-<title>尤洪</title>
+<title>shoppingstreet</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -53,7 +53,7 @@
 	<div class="login">
     	<div class="log_img"><img src="images/l_img.png" width="611" height="425" /></div>
 		<div class="log_c">
-        	<form>
+        	<form id="login_from" onsubmit="return false" action="##" method="post">
             <table border="0" style="width:370px; font-size:14px; margin-top:30px;" cellspacing="0" cellpadding="0">
               <tr height="50" valign="top">
               	<td width="55">&nbsp;</td>
@@ -63,12 +63,12 @@
                 </td>
               </tr>
               <tr height="70">
-                <td>用户名</td>
-                <td><input type="text" value="" class="l_user" /></td>
+                <td>手机号</td>
+                <td><input type="text" value="" class="l_user" name="phone"/></td>
               </tr>
               <tr height="70">
                 <td>密&nbsp; &nbsp; 码</td>
-                <td><input type="password" value="" class="l_pwd" /></td>
+                <td><input type="password" value="" class="l_pwd" name="pwd"/></td>
               </tr>
               <tr>
               	<td>&nbsp;</td>
@@ -81,7 +81,7 @@
               </tr>
               <tr height="60">
               	<td>&nbsp;</td>
-                <td><input type="submit" value="登录" class="log_btn" /></td>
+                <td><input type="submit" value="登录" class="log_btn" onclick="login()"/></td>
               </tr>
             </table>
             </form>
@@ -92,7 +92,7 @@
 <!--Begin Footer Begin-->
 <div class="btmbg">
     <div class="btm">
-        备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
+        备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 shoppingstreet商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
         <img src="images/b_1.gif" width="98" height="33" /><img src="images/b_2.gif" width="98" height="33" /><img src="images/b_3.gif" width="98" height="33" /><img src="images/b_4.gif" width="98" height="33" /><img src="images/b_5.gif" width="98" height="33" /><img src="images/b_6.gif" width="98" height="33" />
     </div>    	
 </div>
@@ -100,6 +100,30 @@
 
 </body>
 
+
+<script type="text/javascript">
+    function login() {
+        $.ajax({
+        //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/user/login" ,//url
+            data: $('#login_from').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.resCode == 0) {
+                    <!--alert("SUCCESS");-->
+                    window.location.href='Index.html';
+                } else {
+                    alert(result.resMsg);
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+</script>
 
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>

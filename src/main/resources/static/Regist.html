@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="js/lrscroll_1.js"></script>
     
     
-<title>尤洪</title>
+<title>shoppingstreet</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -53,7 +53,7 @@
 	<div class="regist">
     	<div class="log_img"><img src="images/l_img.png" width="611" height="425" /></div>
 		<div class="reg_c">
-        	<form>
+        	<form id="register_from" onsubmit="return false" action="##" method="post">
             <table border="0" style="width:420px; font-size:14px; margin-top:20px;" cellspacing="0" cellpadding="0">
               <tr height="50" valign="top">
               	<td width="95">&nbsp;</td>
@@ -63,39 +63,24 @@
                 </td>
               </tr>
               <tr height="50">
-                <td align="right"><font color="#ff4e00">*</font>&nbsp;用户名 &nbsp;</td>
-                <td><input type="text" value="" class="l_user" /></td>
+                <td align="right"><font color="#ff4e00">*</font>&nbsp;手机 &nbsp;</td>
+                <td><input type="text" value="" class="l_tel" name="phone"/></td>
               </tr>
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;密码 &nbsp;</td>
-                <td><input type="password" value="" class="l_pwd" /></td>
+                <td><input type="password" value="" class="l_pwd" name="pwd"/></td>
               </tr>
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;确认密码 &nbsp;</td>
                 <td><input type="password" value="" class="l_pwd" /></td>
               </tr>
               <tr height="50">
+                <td align="right"><font color="#ff4e00">*</font>&nbsp;用户名 &nbsp;</td>
+                <td><input type="text" value="" class="l_user"  name="username"/></td>
+              </tr>
+              <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;邮箱 &nbsp;</td>
-                <td><input type="text" value="" class="l_email" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right"><font color="#ff4e00">*</font>&nbsp;手机 &nbsp;</td>
-                <td><input type="text" value="" class="l_tel" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right">邀请人会员名 &nbsp;</td>
-                <td><input type="text" value="" class="l_mem" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right">邀请人ID号 &nbsp;</td>
-                <td><input type="text" value="" class="l_num" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right"> <font color="#ff4e00">*</font>&nbsp;验证码 &nbsp;</td>
-                <td>
-                    <input type="text" value="" class="l_ipt" />
-                    <a href="#" style="font-size:12px; font-family:'宋体';">换一张</a>
-                </td>
+                <td><input type="text" value="" class="l_email" name="email" /></td>
               </tr>
               <tr>
               	<td>&nbsp;</td>
@@ -107,7 +92,7 @@
               </tr>
               <tr height="60">
               	<td>&nbsp;</td>
-                <td><input type="submit" value="立即注册" class="log_btn" /></td>
+                <td><input type="submit" value="立即注册" class="log_btn" onclick="register()"/></td>
               </tr>
             </table>
             </form>
@@ -118,7 +103,7 @@
 <!--Begin Footer Begin-->
 <div class="btmbg">
     <div class="btm">
-        备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
+        备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 shoppingstreet商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
         <img src="images/b_1.gif" width="98" height="33" /><img src="images/b_2.gif" width="98" height="33" /><img src="images/b_3.gif" width="98" height="33" /><img src="images/b_4.gif" width="98" height="33" /><img src="images/b_5.gif" width="98" height="33" /><img src="images/b_6.gif" width="98" height="33" />
     </div>    	
 </div>
@@ -126,6 +111,28 @@
 
 </body>
 
+<script type="text/javascript">
+    function register() {
+        $.ajax({
+        //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/user/register" ,//url
+            data: $('#register_from').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.resCode == 0) {
+                    alert("SUCCESS");
+                } else {
+                    alert(result.resMsg);
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+</script>
 
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
