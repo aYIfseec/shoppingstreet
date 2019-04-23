@@ -64,7 +64,7 @@
               </tr>
               <tr height="70">
                 <td>手机号</td>
-                <td><input type="text" value="" class="l_user" name="phone"/></td>
+                <td><input type="text" value="" class="l_tel" name="phone"/></td>
               </tr>
               <tr height="70">
                 <td>密&nbsp; &nbsp; 码</td>
@@ -81,7 +81,7 @@
               </tr>
               <tr height="60">
               	<td>&nbsp;</td>
-                <td><input type="submit" value="登录" class="log_btn" onclick="login()"/></td>
+                <td><input type="button" value="登录" class="log_btn" onclick="login()"/></td>
               </tr>
             </table>
             </form>
@@ -118,8 +118,14 @@
                     alert(result.resMsg);
                 }
             },
-            error : function() {
-                alert("异常！");
+            error : function(e) {
+              var res = e.responseJSON;
+              if (res.message != null) {
+                var msg = JSON.parse(res.message);
+                alert(msg.errorDesp);
+              } else {
+                alert(res);
+              }
             }
         });
     }

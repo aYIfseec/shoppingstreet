@@ -92,7 +92,7 @@
               </tr>
               <tr height="60">
               	<td>&nbsp;</td>
-                <td><input type="submit" value="立即注册" class="log_btn" onclick="register()"/></td>
+                <td><input type="button" value="立即注册" class="log_btn" onclick="register()"/></td>
               </tr>
             </table>
             </form>
@@ -122,13 +122,20 @@
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.resCode == 0) {
-                    alert("SUCCESS");
+                    <!--alert("SUCCESS");-->
+                    window.location.href='Login.html';
                 } else {
                     alert(result.resMsg);
                 }
             },
-            error : function() {
-                alert("异常！");
+            error : function(e) {
+              var res = e.responseJSON;
+              if (res.message != null) {
+                var msg = JSON.parse(res.message);
+                alert(msg.errorDesp);
+              } else {
+                alert(res);
+              }
             }
         });
     }
