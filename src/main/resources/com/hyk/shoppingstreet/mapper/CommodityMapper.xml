@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyk.shoppingstreet.dao.CommodityMapper">
+  <resultMap id="BaseResultMap" type="com.hyk.shoppingstreet.model.Commodity">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="thumbs_url" jdbcType="BIGINT" property="thumbsUrl" />
+    <result column="origin_price" jdbcType="DECIMAL" property="originPrice" />
+    <result column="current_price" jdbcType="DECIMAL" property="currentPrice" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+</mapper>

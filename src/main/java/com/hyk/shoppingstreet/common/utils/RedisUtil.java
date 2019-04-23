@@ -201,7 +201,9 @@ public class RedisUtil {
 
             for (int i = 0; i < data.size(); ++i) {
                 T obj = JSON.parseObject(data.get(i), clazz, Feature.DisableCircularReferenceDetect);
-                if (obj != null) res.add(obj);
+                if (obj != null) {
+                    res.add(obj);
+                }
             }
 
         } finally {
