@@ -5,10 +5,11 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="category_id" jdbcType="BIGINT" property="categoryId" />
-    <result column="thumbs_url" jdbcType="BIGINT" property="thumbsUrl" />
+    <result column="thumbs_url" jdbcType="VARCHAR" property="thumbsUrl" />
     <result column="origin_price" jdbcType="DECIMAL" property="originPrice" />
     <result column="current_price" jdbcType="DECIMAL" property="currentPrice" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />

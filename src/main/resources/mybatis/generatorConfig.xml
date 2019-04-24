@@ -47,7 +47,7 @@
     <!-- sql占位符，表示所有的表 -->
     <!--<table tableName="%">-->
       <!--<generatedKey column="epa_id" sqlStatement="Mysql" identity="true" />-->
-    <table tableName="commodity">
+    <table tableName="%">
       <generatedKey column="id" sqlStatement="Mysql" identity="true" />
     </table>
   </context>

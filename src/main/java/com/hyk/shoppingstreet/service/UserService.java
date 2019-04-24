@@ -108,9 +108,4 @@ public class UserService extends AbstractMapperService<Long, UserAccount> {
         return true;
     }
 
-
-    public List<UserAccount> findByPage(Integer pageNo, Integer pageSize) {
-        int offset = pageNo * pageSize;
-        return userAccountMapper.selectByPage(offset, pageSize);
-    }
 }

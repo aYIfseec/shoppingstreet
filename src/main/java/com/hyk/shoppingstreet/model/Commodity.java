@@ -17,6 +17,7 @@ public class Commodity {
     /**
      * ID
      */
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,6 +25,11 @@ public class Commodity {
      * 商品名称
      */
     private String name;
+
+    /**
+     * 库存
+     */
+    private Integer stock;
 
     /**
      * 类目ID
@@ -35,7 +41,7 @@ public class Commodity {
      * 缩略图链接
      */
     @Column(name = "thumbs_url")
-    private Long thumbsUrl;
+    private String thumbsUrl;
 
     /**
      * 原价格
@@ -69,6 +75,8 @@ public class Commodity {
         public static final String id = "id";
 
         public static final String name = "name";
+
+        public static final String stock = "stock";
 
         public static final String categoryId = "categoryId";
 

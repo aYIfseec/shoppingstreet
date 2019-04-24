@@ -16,18 +16,13 @@ public class UserAccount {
     @Id
     private Long uid;
 
-    /**
-     * 手机号
-     */
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String phone;
-
-    @Column(name = "username")
-    private String username;
 
     private String pwd;
 
     private String salt;
+
+    private String username;
 
     private String email;
 
@@ -43,11 +38,11 @@ public class UserAccount {
 
         public static final String phone = "phone";
 
-        public static final String username = "username";
-
         public static final String pwd = "pwd";
 
         public static final String salt = "salt";
+
+        public static final String username = "username";
 
         public static final String email = "email";
 

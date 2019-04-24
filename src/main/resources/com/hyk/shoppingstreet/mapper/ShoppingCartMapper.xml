@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyk.shoppingstreet.dao.ShoppingCartMapper">
+  <resultMap id="BaseResultMap" type="com.hyk.shoppingstreet.model.ShoppingCart">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="commodity_id" jdbcType="BIGINT" property="commodityId" />
+    <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+</mapper>
