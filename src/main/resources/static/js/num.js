@@ -15,7 +15,7 @@ function jianUpdate(jian){
 		c=parseInt(c)-1;    
 		jian.parent().find(".n_ipt").val(c);
 	}
-}    
+}
 
 
 

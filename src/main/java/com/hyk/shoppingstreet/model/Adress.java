@@ -23,6 +23,18 @@ public class Adress {
     @Column(name = "bind_object")
     private Long bindObject;
 
+    /**
+     * 联系人
+     */
+    @Column(name = "kp_name")
+    private String kpName;
+
+    /**
+     * 联系电话
+     */
+    @Column(name = "kp_phone")
+    private String kpPhone;
+
     private Integer province;
 
     private Integer city;
@@ -47,6 +59,10 @@ public class Adress {
         public static final String id = "id";
 
         public static final String bindObject = "bindObject";
+
+        public static final String kpName = "kpName";
+
+        public static final String kpPhone = "kpPhone";
 
         public static final String province = "province";
 

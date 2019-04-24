@@ -13,10 +13,10 @@ import com.hyk.shoppingstreet.dao.UserAccountMapper;
 import com.hyk.shoppingstreet.model.UserAccount;
 import com.hyk.shoppingstreet.service.query.UserQuery;
 import java.util.Date;
-import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -65,11 +65,11 @@ public class UserService extends AbstractMapperService<Long, UserAccount> {
     private UserSession generateUserSession(UserAccount userAccount) {
         String token = UUIDUtil.uuid();
         TokenType.USER_TOKEN.set(userAccount.getUid().toString(), token); // 保持登录状态
-        return UserSession
-            .builder()
-            .userAccount(userSecurityInfoClean(userAccount))
-            .token(token)
-            .build();
+
+        UserSession userSession = new UserSession();
+        BeanUtils.copyProperties(userSecurityInfoClean(userAccount), userSession);
+        userSession.setToken(token);
+        return userSession;
     }
 
     private UserAccount userSecurityInfoClean(UserAccount userAccount) {
@@ -86,7 +86,7 @@ public class UserService extends AbstractMapperService<Long, UserAccount> {
     }
 
     public boolean editInfo(String nickName, String oldPwd, String newPwd) {
-        UserAccount userAccount = UserSessionThreadLocal.getUserSession().getUserAccount();
+        UserAccount userAccount = getById(UserSessionThreadLocal.getUserSession().getUid());
         UserAccount newUserInfo = UserAccount.builder().uid(userAccount.getUid()).username(nickName).build();
 
         if (StringUtils.isNotBlank(oldPwd) && StringUtils.isNotBlank(newPwd)) {

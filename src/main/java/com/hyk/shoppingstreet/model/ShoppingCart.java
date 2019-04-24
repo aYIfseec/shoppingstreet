@@ -1,6 +1,5 @@
 package com.hyk.shoppingstreet.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,8 +25,6 @@ public class ShoppingCart {
     @Column(name = "buy_num")
     private Integer buyNum;
 
-    private BigDecimal amount;
-
     /**
      * -1移除购物车，1正常展示，2已购买
      */
@@ -48,8 +45,6 @@ public class ShoppingCart {
         public static final String commodityId = "commodityId";
 
         public static final String buyNum = "buyNum";
-
-        public static final String amount = "amount";
 
         public static final String state = "state";
 

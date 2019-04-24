@@ -189,7 +189,7 @@
                 </li>
             </ul>
             <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
-            <div class="price_a"><a href="#">去购物车结算</a></div>
+            <div class="price_a"><a href="BuyCar.html">去购物车结算</a></div>
             <!--End 购物车已登录 End-->
         </div>
     </div>
@@ -654,11 +654,13 @@ autoSearch();
 
   function autoSearch() {
     var searchRequestParam = store.get('searchRequestParam');
-    if (searchRequestParam == null || searchRequestParam == '') {return;}
+    if (searchRequestParam == null || searchRequestParam == '') {
+      searchRequestParam = {name : '', pageNo:0, pageSize:2}
+    }
     // console.log(searchRequestParam);
     $('#search_input').val(searchRequestParam.name);
     doSearch(searchRequestParam);
-    store.remove(searchRequestParam);
+    store.remove('searchRequestParam');
   }
 
   function search() {
@@ -682,7 +684,7 @@ autoSearch();
                 + "</div>"
                 + "<div class='carbg'>"
                   + "<a href='#' class='ss'>收藏</a>"
-                  + "<a href='##' class='j_car'>加入购物车</a>"
+                  + "<a id='" + product.id + "' onclick='joinCart(this.id)' class='j_car'>加入购物车</a>"
                 + "</div>"
               + "</li>";
     $('#search_result_ul').append(li);
@@ -759,6 +761,44 @@ doSearch(request);
 </script>
 
 <script  type="text/javascript">
+
+
+
+
+function joinCart(productId){
+  var user = store.get('user');
+  if (user == null) {
+    alert('您还未登录，请先登录');
+  }
+addProductToCart(user.uid, user.token, productId, 1);
+}
+
+  function addProductToCart(uid, token, productId, buyNum) {
+    $.ajax({
+      //几个参数需要注意一下
+      type: "POST",//方法类型
+      dataType: "json",//预期服务器返回的数据类型
+      url: "/cart/add" ,//url
+      data: {"uid":uid, "token":token, "productId":productId, "buyNum":buyNum },
+      success: function (result) {
+        console.log(result);//打印服务端返回的数据(调试用)
+        if (result.resCode == 0) {
+          alert("SUCCESS");
+        } else {
+          alert(result.resMsg);
+        }
+      },
+      error : function(e) {
+        var res = e.responseJSON;
+        if (res.message != null) {
+          var msg = JSON.parse(res.message);
+          alert(msg.errorDesp);
+        } else {
+          alert(res);
+        }
+      }
+    });
+  }
 
 </script>
 

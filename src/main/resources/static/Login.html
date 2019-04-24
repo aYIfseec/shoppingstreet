@@ -100,6 +100,8 @@
 
 </body>
 
+<!--引入store.js-->
+<script src="https://cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
 
 <script type="text/javascript">
     function login() {
@@ -112,7 +114,7 @@
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.resCode == 0) {
-                    <!--alert("SUCCESS");-->
+                    store.set('user', result.resData);
                     window.location.href='Index.html';
                 } else {
                     alert(result.resMsg);

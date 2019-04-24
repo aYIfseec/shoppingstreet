@@ -131,18 +131,12 @@ var kkpager = {
 		selectPage : function(n){
 			this._config['pno'] = n;
 			this._config['total'] = this.total;
-      this.inited = false;
 			this.generPageHtml(this._config,true);
 		},
 		//生成控件代码
 		generPageHtml : function(config,enforceInit){
-		console.log(config);
-		console.log(enforceInit);
-		console.log((enforceInit || !this.inited));
-			//if(enforceInit || !this.inited){
-				this.init(config);
-			//}
-			
+			this.init(config);
+
 			var str_first='',str_prv='',str_next='',str_last='';
 			if(this.isShowFirstPageBtn){
 				if(this.hasPrv){

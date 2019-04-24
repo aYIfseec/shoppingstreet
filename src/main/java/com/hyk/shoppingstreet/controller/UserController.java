@@ -72,7 +72,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public ReturnMsg logout() {
-        userService.logout(UserSessionThreadLocal.getUserSession().getUserAccount().getUid());
+        userService.logout(UserSessionThreadLocal.getUserSession().getUid());
         return ReturnMsg.createWithData();
     }
 

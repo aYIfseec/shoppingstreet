@@ -7,6 +7,8 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="bind_object" jdbcType="BIGINT" property="bindObject" />
+    <result column="kp_name" jdbcType="VARCHAR" property="kpName" />
+    <result column="kp_phone" jdbcType="VARCHAR" property="kpPhone" />
     <result column="province" jdbcType="INTEGER" property="province" />
     <result column="city" jdbcType="INTEGER" property="city" />
     <result column="area" jdbcType="INTEGER" property="area" />

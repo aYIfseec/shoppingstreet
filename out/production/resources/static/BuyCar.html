@@ -9,8 +9,11 @@
            EvPNG.fix('div, ul, img, li, input, a'); 
         </script>
     <![endif]-->
-    
-    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+
+  <script type="text/javascript" src="js/jquery-1.11.1.min_044d0927.js"></script>
+  <script type="text/javascript" src="js/jquery.bxslider_e88acd1b.js"></script>
+
+  <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/menu.js"></script>    
                 
 	<script type="text/javascript" src="js/n_nav.js"></script>   
@@ -184,7 +187,7 @@
                 </li>
             </ul>
             <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
-            <div class="price_a"><a href="#">去购物车结算</a></div>
+            <div class="price_a"><a href="BuyCar.html">去购物车结算</a></div>
             <!--End 购物车已登录 End-->
         </div>
     </div>
@@ -460,7 +463,7 @@
     <!--Begin 第一步：查看购物车 Begin -->
     <div class="content mar_20">
     	<table border="0" class="car_tab" style="width:1200px; margin-bottom:50px;" cellspacing="0" cellpadding="0">
-          <tr>
+          <tr id="cart_first_tr">
             <td class="car_th" width="490">商品名称</td>
             <td class="car_th" width="140">属性</td>
             <td class="car_th" width="150">购买数量</td>
@@ -468,74 +471,7 @@
             <td class="car_th" width="140">返还积分</td>
             <td class="car_th" width="150">操作</td>
           </tr>
-          <tr>
-            <td>
-            	<div class="c_s_img"><img src="images/c_1.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a onclick="ShowDiv('MyDiv','fade')">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr class="car_tr">
-            <td>
-            	<div class="c_s_img"><img src="images/c_2.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr>
-            <td>
-            	<div class="c_s_img"><img src="images/c_3.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr class="car_tr">
-            <td>
-            	<div class="c_s_img"><img src="images/c_4.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
+
           <tr height="70">
           	<td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
             	<label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
@@ -662,7 +598,104 @@
 </div>
 
 </body>
+<!--引入store.js-->
+<script src="https://cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
 
+<script type="text/javascript">
+
+  function createTr(cart) {
+  var tr = '<tr>' +
+    '<td>' +
+      '<div class="c_s_img"><img src="images/' + cart.thumbsUrl + '" width="73" height="73" /></div>' +
+      cart.name +
+      '</td>' +
+    '<td align="center">' + cart.name + '</td>' +
+    '<td align="center">' +
+      '<div class="c_num">' +
+        '<input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />' +
+        '<input type="text" value="' + cart.buyNum + '" name="" class="car_ipt" />' +
+        '<input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />' +
+        '</div>' +
+      '</td>' +
+    '<td align="center" style="color:#ff4e00;">' + cart.currentPrice + '</td>' +
+    '<td align="center">0</td>' +
+    '<td align="center"><a onclick="del(this.id)" id="' + cart.id + '">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>' +
+    '</tr>';
+    $('#cart_first_tr').after(tr);
+  }
+
+  function getList() {
+  var user = store.get('user');
+  if (user == null) {
+  alert('您还未登录，请先登录');
+  }
+  $.ajax({
+  //几个参数需要注意一下
+  type: "POST",//方法类型
+  dataType: "json",//预期服务器返回的数据类型
+  url: "/cart/list" ,//url
+  data: {"uid":user.uid, "token":user.token},
+  success: function (result) {
+  console.log(result);//打印服务端返回的数据(调试用)
+  if (result.resCode == 0) {
+  // 动态增加div
+  var dataArray = result.resData;
+  // $('#search_result_ul').empty();
+  // $('#search_result_total').text('共发现'+ dataArray.length +'件商品');
+  $.each(dataArray, function(){
+  createTr(this);
+  });
+  } else {
+  alert(result.resMsg);
+  }
+  },
+  error : function(e) {
+  var res = e.responseJSON;
+  if (res.message != null) {
+  var msg = JSON.parse(res.message);
+  alert(msg.errorDesp);
+  } else {
+  alert(res);
+  }
+  }
+  });
+  }
+
+  getList();
+</script>
+
+<script type="text/javascript">
+  function del(cartId) {
+  var user = store.get('user');
+  if (user == null) {
+  alert('您还未登录，请先登录');
+  }
+  $.ajax({
+  //几个参数需要注意一下
+  type: "POST",//方法类型
+  dataType: "json",//预期服务器返回的数据类型
+  url: "/cart/del" ,//url
+  data: {"uid":user.uid, "token":user.token, "shoppingCartId":cartId},
+  success: function (result) {
+  console.log(result);//打印服务端返回的数据(调试用)
+  if (result.resCode == 0) {
+  $('#'+cartId).parent().parent().remove();
+  } else {
+  alert(result.resMsg);
+  }
+  },
+  error : function(e) {
+  var res = e.responseJSON;
+  if (res.message != null) {
+  var msg = JSON.parse(res.message);
+  alert(msg.errorDesp);
+  } else {
+  alert(res);
+  }
+  }
+  });
+  }
+</script>
 
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>

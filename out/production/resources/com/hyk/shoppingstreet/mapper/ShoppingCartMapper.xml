@@ -9,7 +9,6 @@
     <result column="uid" jdbcType="BIGINT" property="uid" />
     <result column="commodity_id" jdbcType="BIGINT" property="commodityId" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
-    <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
