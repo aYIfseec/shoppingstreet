@@ -1359,12 +1359,12 @@
 <script type="text/javascript">
     function search() {
       var searchText = $('#search_input').val();
-      if (searchText == null || searchText == '') {
-        alert('请输入搜索内容');
-        return;
-      }
+      //if (searchText == null || searchText == '') {
+    //alert('请输入搜索内容');
+    //return;
+    //}
 
-      store.set('searchRequestParam', {name : searchText, pageNo:0, pageSize:3});
+      store.set('searchRequestParam', {name : searchText, pageNo:0, pageSize:2});
       window.location.href='Search_Result.html';
     }
 </script>

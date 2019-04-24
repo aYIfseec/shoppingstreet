@@ -23,7 +23,7 @@
   <!--引入store.js-->
   <script src="https://cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
 
-  <script type="text/javascript" src="js/kkpager.min.js"></script>
+  <script type="text/javascript" src="js/kkpager.js"></script>
   <link rel="stylesheet" type="text/css" href="js/kkpager_orange.css" />
 <title>购物街</title>
 </head>
@@ -109,7 +109,6 @@
         <!--End 所在收货地区 End-->
         <span class="fr">
         	<!-- 引入头文件 -->
-        	<%@ include file="header.jsp" %>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -556,15 +555,7 @@
 
             </ul>
 
-            <div class="pages" id="kkpager">
-
-              <a href="#" class="p_pre">上一页</a>
-              <a href="#" class="cur">1</a><a href="#">2</a><a
-                href="#">3</a>...<a href="#">20</a>
-              <a href="#" class="p_pre">下一页</a>
-
-              <span class="fr" id="search_result_total">共发现120件商品</span>
-            </div>
+            <div class="pages" id="kkpager"></div>
 
 
           </div>
@@ -672,10 +663,10 @@ autoSearch();
 
   function search() {
     var searchText = $('#search_input').val();
-    if (searchText == null || searchText == '') {
-      alert('请输入搜索内容');
-      return;
-    }
+    //if (searchText == null || searchText == '') {
+      //alert('请输入搜索内容');
+      //return;
+    //}
     // TODO 获取页码
     var request = {name : searchText, pageNo:0, pageSize:2};
     doSearch(request);
@@ -733,13 +724,20 @@ autoSearch();
 
 
   function page(pageNo, pageSize, totalCount) {
+//$('#kkpager').empty();
     pageNo++;console.log(pageNo);
+var totalPage = Math.ceil(totalCount/pageSize);
+totalPage = totalPage == 0 ? 1 : totalPage;
+console.log(pageNo);
+console.log(totalPage);
+console.log(totalCount);
+
     //生成分页控件
     kkpager.generPageHtml({
       pno : pageNo,
       mode : 'click', //设置为click模式
       //总页码
-      total : totalCount/pageSize + (totalCount%pageSize > 0 ? 1 : 0),
+      total : totalPage,
       //总数据条数
       totalRecords : totalCount,
       //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click

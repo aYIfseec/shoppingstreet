@@ -130,13 +130,18 @@ var kkpager = {
 		//不刷新页面直接手动调用选中某一页码
 		selectPage : function(n){
 			this._config['pno'] = n;
+			this._config['total'] = this.total;
+      this.inited = false;
 			this.generPageHtml(this._config,true);
 		},
 		//生成控件代码
 		generPageHtml : function(config,enforceInit){
-			if(enforceInit || !this.inited){
+		console.log(config);
+		console.log(enforceInit);
+		console.log((enforceInit || !this.inited));
+			//if(enforceInit || !this.inited){
 				this.init(config);
-			}
+			//}
 			
 			var str_first='',str_prv='',str_next='',str_last='';
 			if(this.isShowFirstPageBtn){
