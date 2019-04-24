@@ -99,7 +99,37 @@
         </div>
     </div>
 </div>
-<!--End Login End--> 
+<!--End Login End-->
+
+
+<!--Begin 弹出层-注册成功 Begin-->
+<div id="register_success" class="black_overlay"></div>
+<div id="MyDiv" class="white_content">
+  <div class="white_d">
+    <div class="notice_t">
+      <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv('MyDiv','register_success')"><img src="images/close.gif" /></span>
+    </div>
+    <div class="notice_c">
+
+      <table border="0" align="center" style="margin-top:;" cellspacing="0" cellpadding="0">
+        <tr valign="top">
+          <td width="40"><img src="images/suc.png" /></td>
+          <td>
+            <span style="color:#3e3e3e; font-size:18px; font-weight:bold;">您已成功注册</span><br />
+            <a href="Login.html">前往登录 >></a>
+          </td>
+        </tr>
+        <tr height="50" valign="bottom">
+          <td>&nbsp;</td>
+          <td><button onclick="CloseDiv('MyDiv','register_success')" class="b_sure">知道了</button></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+<!--End 弹出层-注册成功 End-->
+
 <!--Begin Footer Begin-->
 <div class="btmbg">
     <div class="btm">
@@ -110,6 +140,7 @@
 <!--End Footer End -->    
 
 </body>
+<script type="text/javascript" src="js/shade.js"></script>
 
 <script type="text/javascript">
     function register() {
@@ -123,7 +154,7 @@
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.resCode == 0) {
                     <!--alert("SUCCESS");-->
-                    window.location.href='Login.html';
+                    ShowDiv('MyDiv','register_success');
                 } else {
                     alert(result.resMsg);
                 }

@@ -162,11 +162,12 @@
 <div class="top">
     <div class="logo"><a href="Index.html"><img src="images/logo.png" /></a></div>
     <div class="search">
-    	<form>
-        	<input type="text" value="" class="s_ipt" />
-            <input type="submit" value="搜索" class="s_btn" />
-        </form>                      
-        <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
+      <form id="search_from" onsubmit="return false" action="##" method="post">
+        <input id="search_input" type="text" value="" class="s_ipt" name="name"/>
+        <input type="button" value="搜索" class="s_btn" onclick="search()"/>
+      </form>
+      <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a
+          href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
     </div>
     <div class="i_car">
     	<div class="car_t">购物车 [ <span>3</span> ]</div>
@@ -1353,7 +1354,20 @@
 </div>
 
 </body>
+<!--引入store.js-->
+<script src="https://cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
+<script type="text/javascript">
+    function search() {
+      var searchText = $('#search_input').val();
+      if (searchText == null || searchText == '') {
+        alert('请输入搜索内容');
+        return;
+      }
 
+      store.set('searchRequestParam', {name : searchText, pageNo:0, pageSize:3});
+      window.location.href='Search_Result.html';
+    }
+</script>
 
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>

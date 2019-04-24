@@ -9,15 +9,22 @@
            EvPNG.fix('div, ul, img, li, input, a'); 
         </script>
     <![endif]-->
-    
-    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+
+  <script type="text/javascript" src="js/jquery-1.11.1.min_044d0927.js"></script>
+  <script type="text/javascript" src="js/jquery.bxslider_e88acd1b.js"></script>
+
+  <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/menu.js"></script>    
             
 	<script type="text/javascript" src="js/lrscroll_1.js"></script>
     
     
 	<script type="text/javascript" src="js/n_nav.js"></script>
-    
+  <!--引入store.js-->
+  <script src="https://cdn.bootcss.com/store.js/1.3.20/store.min.js"></script>
+
+  <script type="text/javascript" src="js/kkpager.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="js/kkpager_orange.css" />
 <title>购物街</title>
 </head>
 <body>  
@@ -151,12 +158,13 @@
 <div class="top">
     <div class="logo"><a href="Index.html"><img src="images/logo.png" /></a></div>
     <div class="search">
-    	<form>
-        	<input type="text" value="" class="s_ipt" />
-            <input type="submit" value="搜索" class="s_btn" />
-        </form>                      
+      <form id="search_from" onsubmit="return false" action="##" method="post">
+        <input id="search_input" type="text" value="" class="s_ipt" name="name"/>
+        <input type="button" value="搜索" class="s_btn" onclick="search()"/>
+      </form>
         <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
     </div>
+
     <div class="i_car">
     	<div class="car_t">购物车 [ <span>3</span> ]</div>
         <div class="car_bg">
@@ -541,33 +549,25 @@
                     </a>
                     <a href="#">新品</a>
                 </span>
-                <span class="fr">共发现120件</span>
             </div>
-            <div class="list_c">
-            	
-                <ul class="cate_list">
-                <c:forEach items="${requestScope.products}" var="product">
-                	<li>
-                    	<div class="img"><a href="#"><img src="images/${product.filename}" width="210" height="185" /></a></div>
-                        <div class="price">
-                            <font>￥<span>${product.price}</span></font> &nbsp; 26R
-                        </div>
-                        <div class="name"><a href="${pageContext.request.contextPath }/listProduct.action?productId=${product.id }">${product.name}</a></div>
-                        <div class="carbg">
-                        	<a href="#" class="ss">收藏</a>
-                            <a href="${pageContext.request.contextPath }/addCar.action?productId=${product.id }" class="j_car">加入购物车</a>
-                        </div>
-                    </li>
-                 </c:forEach>
-                </ul>
-                
-                <div class="pages">
-                	<a href="#" class="p_pre">上一页</a><a href="#" class="cur">1</a><a href="#">2</a><a href="#">3</a>...<a href="#">20</a><a href="#" class="p_pre">下一页</a>
-                </div>
-                
-                
-                
+          <div class="list_c" id="search_result_div">
+
+            <ul class="cate_list" id="search_result_ul">
+
+            </ul>
+
+            <div class="pages" id="kkpager">
+
+              <a href="#" class="p_pre">上一页</a>
+              <a href="#" class="cur">1</a><a href="#">2</a><a
+                href="#">3</a>...<a href="#">20</a>
+              <a href="#" class="p_pre">下一页</a>
+
+              <span class="fr" id="search_result_total">共发现120件商品</span>
             </div>
+
+
+          </div>
         </div>
     </div>
     
@@ -657,6 +657,112 @@
 
 </body>
 
+<script type="text/javascript">
+autoSearch();
+
+
+  function autoSearch() {
+    var searchRequestParam = store.get('searchRequestParam');
+    if (searchRequestParam == null || searchRequestParam == '') {return;}
+    // console.log(searchRequestParam);
+    $('#search_input').val(searchRequestParam.name);
+    doSearch(searchRequestParam);
+    store.remove(searchRequestParam);
+  }
+
+  function search() {
+    var searchText = $('#search_input').val();
+    if (searchText == null || searchText == '') {
+      alert('请输入搜索内容');
+      return;
+    }
+    // TODO 获取页码
+    var request = {name : searchText, pageNo:0, pageSize:2};
+    doSearch(request);
+  }
+
+  function createLi(product) {
+    var li = "<li><div class='img'><a href='#'><img src='images/" + product.thumbsUrl + "' width='210' height='185'/></a></div>"
+                + "<div class='price'>"
+                  + "<font>￥<span>" + product.currentPrice +"</span></font>"
+                + "</div>"
+                + "<div class='name'>"
+                + "<a href='##'>" + product.name + "</a>"
+                + "</div>"
+                + "<div class='carbg'>"
+                  + "<a href='#' class='ss'>收藏</a>"
+                  + "<a href='##' class='j_car'>加入购物车</a>"
+                + "</div>"
+              + "</li>";
+    $('#search_result_ul').append(li);
+  }
+
+  function doSearch(searchRequestParam) {
+    $.ajax({
+    //几个参数需要注意一下
+        type: "POST",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        url: "/commodity/queryOnePage" ,//url
+        data: searchRequestParam,
+        success: function (result) {
+            console.log(result);//打印服务端返回的数据(调试用)
+            if (result.resCode == 0) {
+                // 动态增加div
+                var dataArray = result.resData;
+                page(searchRequestParam.pageNo, searchRequestParam.pageSize, result.totalCount);
+                $('#search_result_ul').empty();
+                $('#search_result_total').text('共发现'+ dataArray.length +'件商品');
+                $.each(dataArray, function(){
+                  createLi(this);
+                });
+            } else {
+                alert(result.resMsg);
+            }
+        },
+        error : function(e) {
+          var res = e.responseJSON;
+          if (res.message != null) {
+            var msg = JSON.parse(res.message);
+            alert(msg.errorDesp);
+          } else {
+            alert(res);
+          }
+        }
+    });
+  }
+
+
+  function page(pageNo, pageSize, totalCount) {
+    pageNo++;console.log(pageNo);
+    //生成分页控件
+    kkpager.generPageHtml({
+      pno : pageNo,
+      mode : 'click', //设置为click模式
+      //总页码
+      total : totalCount/pageSize + (totalCount%pageSize > 0 ? 1 : 0),
+      //总数据条数
+      totalRecords : totalCount,
+      //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+      //适用于不刷新页面，比如ajax
+      click : function(n){
+      //这里可以做自已的处理
+var request = {name : $('#search_input').val(), pageNo:n-1, pageSize:pageSize};
+doSearch(request);
+      //处理完后可以手动条用selectPage进行页码选中切换
+      this.selectPage(n);
+      },
+      //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+      getHref : function(n){
+      return '#';
+      }
+
+    });
+  }
+</script>
+
+<script  type="text/javascript">
+
+</script>
 
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>

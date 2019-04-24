@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyk.shoppingstreet.dao.AdressMapper">
+  <resultMap id="BaseResultMap" type="com.hyk.shoppingstreet.model.Adress">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bind_object" jdbcType="BIGINT" property="bindObject" />
+    <result column="province" jdbcType="INTEGER" property="province" />
+    <result column="city" jdbcType="INTEGER" property="city" />
+    <result column="area" jdbcType="INTEGER" property="area" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+</mapper>
