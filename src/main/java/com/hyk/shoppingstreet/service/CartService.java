@@ -10,6 +10,7 @@ import com.hyk.shoppingstreet.model.Commodity;
 import com.hyk.shoppingstreet.model.ShoppingCart;
 import com.hyk.shoppingstreet.service.query.CartQuery;
 import com.hyk.shoppingstreet.service.vo.CartVO;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -101,6 +102,7 @@ public class CartService extends AbstractMapperService<Long, ShoppingCart> {
             throw BizException.create(Status.PARAM_ERROR);
         }
         shoppingCart.setState(-1);
+        shoppingCart.setModifyTime(new Date());
         return updateById(shoppingCart) > 0;
     }
 
@@ -110,6 +112,7 @@ public class CartService extends AbstractMapperService<Long, ShoppingCart> {
             throw BizException.create(Status.PARAM_ERROR);
         }
         shoppingCart.setBuyNum(updateNum);
+        shoppingCart.setModifyTime(new Date());
         return updateById(shoppingCart) > 0;
     }
 }

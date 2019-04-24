@@ -475,12 +475,14 @@
           <tr height="70">
           	<td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
             	<label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
-                <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥2899</b></span>
+                <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;"  id="priceSum">￥2899</b></span>
             </td>
           </tr>
           <tr valign="top" height="150">
           	<td colspan="6" align="right">
-            	<a href="#"><img src="images/buy1.gif" /></a>&nbsp; &nbsp; <a href="#"><img src="images/buy2.gif" /></a>
+            	<a href="Search_Result.html"><img src="images/buy1.gif" />
+              </a>&nbsp; &nbsp;
+              <a onclick="#"><img src="images/buy2.gif" /></a>
             </td>
           </tr>
         </table>
@@ -612,12 +614,12 @@
     '<td align="center">' + cart.name + '</td>' +
     '<td align="center">' +
       '<div class="c_num">' +
-        '<input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />' +
-        '<input type="text" value="' + cart.buyNum + '" name="" class="car_ipt" />' +
-        '<input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />' +
+        '<input type="button" value="" name="' + cart.id + '" onclick="jianUpdate1(jq(this));updateNum(this.name);" class="car_btn_1" />' +
+        '<input type="button" value="' + cart.buyNum + '" name="" class="car_ipt" id="buyNum' + cart.id + '""/>' +
+        '<input type="button" value="" name="' + cart.id + '" onclick="addUpdate1(jq(this));updateNum(this.name);" class="car_btn_2" />' +
         '</div>' +
       '</td>' +
-    '<td align="center" style="color:#ff4e00;">' + cart.currentPrice + '</td>' +
+    '<td align="center" style="color:#ff4e00;">¥' + cart.currentPrice*cart.buyNum + '</td>' +
     '<td align="center">0</td>' +
     '<td align="center"><a onclick="del(this.id)" id="' + cart.id + '">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>' +
     '</tr>';
@@ -642,9 +644,12 @@
   var dataArray = result.resData;
   // $('#search_result_ul').empty();
   // $('#search_result_total').text('共发现'+ dataArray.length +'件商品');
-  $.each(dataArray, function(){
-  createTr(this);
-  });
+    var priceSum = 0;
+    $.each(dataArray, function(){
+      priceSum += this.currentPrice*this.buyNum;
+      createTr(this);
+    });
+    $('#priceSum').text('¥' + priceSum);
   } else {
   alert(result.resMsg);
   }
@@ -695,6 +700,40 @@
   }
   });
   }
+
+
+  function updateNum(cartId) {
+  var user = store.get('user');
+  if (user == null) {
+  alert('您还未登录，请先登录');
+  }
+  $.ajax({
+  //几个参数需要注意一下
+  type: "POST",//方法类型
+  dataType: "json",//预期服务器返回的数据类型
+  url: "/cart/updateNum" ,//url
+  data: {"uid":user.uid, "token":user.token,
+  "shoppingCartId":cartId, "updateNum":$('#buyNum'+cartId).val()},
+  success: function (result) {
+  console.log(result);//打印服务端返回的数据(调试用)
+  if (result.resCode == 0) {
+  window.location.href='BuyCar.html';
+  } else {
+  alert(result.resMsg);
+  }
+  },
+  error : function(e) {
+  var res = e.responseJSON;
+  if (res.message != null) {
+  var msg = JSON.parse(res.message);
+  alert(msg.errorDesp);
+  } else {
+  alert(res);
+  }
+  }
+  });
+  }
+
 </script>
 
 <!--[if IE 6]>
