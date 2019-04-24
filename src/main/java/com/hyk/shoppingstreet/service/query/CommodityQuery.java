@@ -18,8 +18,7 @@ public class CommodityQuery extends AbstractQuery<Commodity> {
     @Override
     protected void addCondition(Criteria condition) {
 
-        // TODO 改为notempt
-        if (StringUtils.isNotBlank(name)) {
+        if (StringUtils.isNotEmpty(name)) {
             condition.andLike(column.name, StringUtil.like(name));
         }
 
