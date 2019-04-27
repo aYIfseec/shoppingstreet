@@ -4,7 +4,6 @@ import com.hyk.shoppingstreet.common.ReturnMsg;
 import com.hyk.shoppingstreet.common.Status;
 import com.hyk.shoppingstreet.common.exception.BizException;
 import com.hyk.shoppingstreet.common.utils.UserSessionThreadLocal;
-import com.hyk.shoppingstreet.model.ShoppingCart;
 import com.hyk.shoppingstreet.service.CartService;
 import com.hyk.shoppingstreet.service.vo.CartVO;
 import java.util.List;

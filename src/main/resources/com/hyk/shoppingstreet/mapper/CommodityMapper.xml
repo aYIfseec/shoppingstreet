@@ -16,4 +16,21 @@
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
+
+  <update id="updateStockBatch" parameterType="list">
+    update commodity
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="stock =case" suffix="end,">
+        <foreach collection="commodityList" item="commodity" index="index">
+          <if test="commodity.id != null">
+            when id=#{commodity.id} then #{commodity.stock}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="commodityList" separator="or" item="commodity" index="index">
+      id=#{commodity.id}
+    </foreach>
+  </update>
 </mapper>

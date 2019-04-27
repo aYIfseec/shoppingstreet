@@ -2,7 +2,11 @@ package com.hyk.shoppingstreet.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +27,18 @@ public class Order {
      */
     private Long buyer;
 
+  /**
+   * 收货地址id
+   */
+  @Column(name = "address_id")
+  private Long addressId;
+
+  /**
+   * 送货方式
+   */
+  @Column(name = "delivery_way")
+  private Long deliveryWay;
+
     /**
      * 交易金额
      */
@@ -39,18 +55,26 @@ public class Order {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    // order columns
+  private String memo;
+
+  // order columns
     public static class column {
         public static final String id = "id";
 
         public static final String buyer = "buyer";
 
-        public static final String amount = "amount";
+    public static final String addressId = "addressId";
+
+    public static final String deliveryWay = "deliveryWay";
+
+    public static final String amount = "amount";
 
         public static final String state = "state";
 
         public static final String createTime = "createTime";
 
         public static final String modifyTime = "modifyTime";
-    }
+
+    public static final String memo = "memo";
+  }
 }

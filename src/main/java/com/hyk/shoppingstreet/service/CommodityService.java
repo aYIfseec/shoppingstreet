@@ -1,6 +1,5 @@
 package com.hyk.shoppingstreet.service;
 
-import com.google.common.collect.Lists;
 import com.hyk.shoppingstreet.common.service.AbstractMapperService;
 import com.hyk.shoppingstreet.common.utils.IdGenerator;
 import com.hyk.shoppingstreet.dao.CommodityMapper;
@@ -26,4 +25,7 @@ public class CommodityService extends AbstractMapperService<Long, Commodity> {
 //        return Lists.newArrayList();
     }
 
+  public void updateStockBatch(List<Commodity> commodityList) {
+    commodityMapper.updateStockBatch(commodityList);
+  }
 }

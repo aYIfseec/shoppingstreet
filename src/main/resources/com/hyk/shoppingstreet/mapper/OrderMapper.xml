@@ -7,9 +7,12 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="buyer" jdbcType="BIGINT" property="buyer" />
+    <result column="address_id" jdbcType="BIGINT" property="addressId"/>
+    <result column="delivery_way" jdbcType="BIGINT" property="deliveryWay"/>
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo"/>
   </resultMap>
 </mapper>

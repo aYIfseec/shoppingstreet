@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @Service
@@ -36,10 +35,19 @@ public class CartService extends AbstractMapperService<Long, ShoppingCart> {
     @Resource
     private CommodityService commodityService;
 
+    public List<ShoppingCart> query(List<Long> uids, List<Long> ids) {
+        return query(uids, ids, Lists.newArrayList(1));
+    }
+
+    public List<ShoppingCart> query(List<Long> uids, List<Long> ids, List<Integer> stateList) {
+        CartQuery query = CartQuery.builder().ids(ids).uids(uids).stateList(stateList).build();
+        List<ShoppingCart> shoppingCartList = findByQuery(query);
+        return shoppingCartList;
+    }
 
     public List<CartVO> myList(Long uid) {
         CartQuery query = CartQuery.builder().uid(uid).state(1).build();
-        List<ShoppingCart> shoppingCartList = findByQuery(query, "modify_time");
+        List<ShoppingCart> shoppingCartList = findByQuery(query);
 
         List<CartVO> res = Lists.newArrayList();
         if (CollectionUtils.isEmpty(shoppingCartList)) {
