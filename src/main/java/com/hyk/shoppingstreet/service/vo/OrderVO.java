@@ -1,5 +1,7 @@
 package com.hyk.shoppingstreet.service.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.hyk.shoppingstreet.model.OrderDetail;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,21 +22,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderVO {
 
+  @JsonFormat(shape = Shape.STRING)
   private Long id;
 
   /**
    * 买家
    */
+  @JsonFormat(shape = Shape.STRING)
   private Long buyer;
 
   /**
    * 收货地址id
    */
+  @JsonFormat(shape = Shape.STRING)
   private Long addressId;
 
   /**
    * 送货方式
    */
+  @JsonFormat(shape = Shape.STRING)
   private Long deliveryWay;
 
   /**

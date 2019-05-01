@@ -5,6 +5,7 @@ import com.hyk.shoppingstreet.common.utils.UserSessionThreadLocal;
 import com.hyk.shoppingstreet.controller.request.AddressSaveRequest;
 import com.hyk.shoppingstreet.model.Address;
 import com.hyk.shoppingstreet.service.AddressService;
+import com.hyk.shoppingstreet.service.vo.AddressVO;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -28,12 +29,12 @@ public class AddressController {
   private AddressService addressService;
 
   @PostMapping("/list")
-  public ReturnMsg<List<Address>> myList(
+  public ReturnMsg<List<AddressVO>> myList(
   ) {
 
     Long uid = UserSessionThreadLocal.getUserSession().getUid();
 
-    List<Address> res = addressService.myList(uid);
+    List<AddressVO> res = addressService.myList(uid);
 
     return ReturnMsg.createWithData(res);
   }

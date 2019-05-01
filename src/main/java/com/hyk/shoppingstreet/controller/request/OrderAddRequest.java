@@ -21,9 +21,9 @@ public class OrderAddRequest {
   @NotNull(message = "addressId is null")
   private Long addressId;
 
-  @ApiModelProperty(value = "送货方式")
-  @NotNull(message = "deliveryWay is null")
-  private Long deliveryWay;
+//  @ApiModelProperty(value = "送货方式")
+//  @NotNull(message = "deliveryWay is null")
+//  private Long deliveryWay;
 
 
   private String memo;

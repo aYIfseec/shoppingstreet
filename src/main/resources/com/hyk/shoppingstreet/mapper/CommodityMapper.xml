@@ -21,7 +21,7 @@
     update commodity
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="stock =case" suffix="end,">
-        <foreach collection="commodityList" item="commodity" index="index">
+        <foreach collection="commodityList" index="index" item="commodity">
           <if test="commodity.id != null">
             when id=#{commodity.id} then #{commodity.stock}
           </if>
@@ -29,7 +29,7 @@
       </trim>
     </trim>
     where
-    <foreach collection="commodityList" separator="or" item="commodity" index="index">
+    <foreach collection="commodityList" index="index" item="commodity" separator="or">
       id=#{commodity.id}
     </foreach>
   </update>

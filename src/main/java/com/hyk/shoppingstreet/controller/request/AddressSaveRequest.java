@@ -19,7 +19,7 @@ public class AddressSaveRequest {
     @NotBlank(message = "kpName is Blank")
     private String kpName;
 
-    @Length(min = 11, max = 11, message = "kpPhone error")
+    @Length(min = 11, max = 12, message = "kpPhone error")
     private String kpPhone;
 
     private Integer province;

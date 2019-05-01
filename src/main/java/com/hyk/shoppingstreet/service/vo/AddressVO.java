@@ -1,36 +1,31 @@
 package com.hyk.shoppingstreet.service.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "address")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressVO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonFormat(shape = Shape.STRING)
     private Long id;
 
     /**
      * 地址绑定的对象
      */
-    @Column(name = "bind_object")
+    @JsonFormat(shape = Shape.STRING)
     private Long bindObject;
 
     /**
      * 联系人
      */
-    @Column(name = "kp_name")
     private String kpName;
 
     /**
@@ -47,7 +42,6 @@ public class AddressVO {
 
     private String detail;
 
-    @Column(name = "post_code")
     private String postCode;
 
     /**
@@ -55,10 +49,8 @@ public class AddressVO {
      */
     private Integer state;
 
-    @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "modify_time")
     private Date modifyTime;
 
     // address columns

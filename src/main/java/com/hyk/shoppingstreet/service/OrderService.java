@@ -6,11 +6,11 @@ import com.hyk.shoppingstreet.common.Status;
 import com.hyk.shoppingstreet.common.exception.BizException;
 import com.hyk.shoppingstreet.common.service.AbstractMapperService;
 import com.hyk.shoppingstreet.common.utils.IdGenerator;
-import com.hyk.shoppingstreet.dao.OrderMapper;
+import com.hyk.shoppingstreet.dao.TradeOrderMapper;
 import com.hyk.shoppingstreet.model.Commodity;
-import com.hyk.shoppingstreet.model.Order;
 import com.hyk.shoppingstreet.model.OrderDetail;
 import com.hyk.shoppingstreet.model.ShoppingCart;
+import com.hyk.shoppingstreet.model.TradeOrder;
 import com.hyk.shoppingstreet.service.query.OrderQuery;
 import com.hyk.shoppingstreet.service.vo.OrderVO;
 import java.math.BigDecimal;
@@ -35,13 +35,13 @@ import org.springframework.util.CollectionUtils;
 
 @Slf4j
 @Service
-public class OrderService extends AbstractMapperService<Long, Order> {
+public class OrderService extends AbstractMapperService<Long, TradeOrder> {
 
 
   @Resource
   private IdGenerator idGen;
   @Resource
-  private OrderMapper orderMapper;
+  private TradeOrderMapper orderMapper;
   @Resource
   private OrderDetailService orderDetailService;
 
@@ -55,13 +55,13 @@ public class OrderService extends AbstractMapperService<Long, Order> {
     List<OrderVO> res = Lists.newArrayList();
 
     OrderQuery query = OrderQuery.builder().uid(uid).build();
-    List<Order> orders = findByQuery(query);
+    List<TradeOrder> orders = findByQuery(query);
 
     if (CollectionUtils.isEmpty(orders)) {
       return res;
     }
 
-    List<Long> orderIds = Lists.transform(orders, Order::getId);
+    List<Long> orderIds = Lists.transform(orders, TradeOrder::getId);
     Multimap<Long, OrderDetail> orderDetailMap = orderDetailService
         .getOrderDetailMapByOrderIds(orderIds);
 
@@ -80,7 +80,7 @@ public class OrderService extends AbstractMapperService<Long, Order> {
   }
 
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public Boolean add(Order order, List<Long> cartIds) {
+  public Boolean add(TradeOrder order, List<Long> cartIds) {
 
     List<ShoppingCart> shoppingCarts = preCheckAndClearCart(order.getBuyer(), cartIds);
 
@@ -94,13 +94,20 @@ public class OrderService extends AbstractMapperService<Long, Order> {
 
     List<OrderDetail> orderDetails = addBatch(orderId, shoppingCarts, commodityList);
 
-    BigDecimal sum = new BigDecimal(0);
-    orderDetails.forEach(in -> {
-      sum.add(in.getAmount());
-    });
-    Order notPayOrder = Order.builder().id(orderId).amount(sum).state(1).build();
+    BigDecimal sum = new BigDecimal("0.00");
+    for(OrderDetail in : orderDetails ){
+      sum = sum.add(in.getAmount());
+    }
+    TradeOrder notPayOrder = TradeOrder.builder().build();
     BeanUtils.copyProperties(order, notPayOrder);
-    insert(notPayOrder);
+    notPayOrder.setId(orderId);
+    notPayOrder.setAmount(sum);
+    notPayOrder.setState(1);
+    notPayOrder.setDeliveryWay(0L);
+//    notPayOrder.setMemo("");
+//    notPayOrder.setCreateTime(new Date());
+//    notPayOrder.setModifyTime(new Date());
+    orderMapper.insert(notPayOrder);
     return true;
   }
 
@@ -114,7 +121,6 @@ public class OrderService extends AbstractMapperService<Long, Order> {
       Commodity commodity = map.get(in.getCommodityId());
 
       OrderDetail orderDetail = OrderDetail.builder()
-          .id(idGen.nextId())
           .orderId(orderId)
           .buyNum(in.getBuyNum())
           .commodityId(commodity.getId())
@@ -130,15 +136,14 @@ public class OrderService extends AbstractMapperService<Long, Order> {
 
 
   public Boolean cancel(Long uid, Long orderId) {
-    Order order = getById(orderId);
+    TradeOrder order = getById(orderId);
     if (order == null || order.getBuyer().equals(uid) == false) {
       throw BizException.create(Status.PARAM_ERROR);
     }
 
-    return updateById(Order.builder().id(orderId).state(-1).modifyTime(new Date()).build()) > 0;
+    return updateById(TradeOrder.builder().id(orderId).state(-1).modifyTime(new Date()).build()) > 0;
   }
 
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   private List<ShoppingCart> preCheckAndClearCart(Long uid, List<Long> cartIds) {
     List<ShoppingCart> shoppingCarts = cartService.query(Lists.newArrayList(uid), cartIds);
     if (CollectionUtils.isEmpty(shoppingCarts)) {
@@ -149,7 +154,6 @@ public class OrderService extends AbstractMapperService<Long, Order> {
     return shoppingCarts;
   }
 
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   private List<Commodity> preCheckAndReduceStock(List<ShoppingCart> shoppingCarts) {
     List<Commodity> commodityList = commodityService
         .getListByIds(Lists.transform(shoppingCarts, ShoppingCart::getCommodityId));

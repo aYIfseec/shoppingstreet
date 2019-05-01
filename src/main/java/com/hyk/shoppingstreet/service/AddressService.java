@@ -1,5 +1,6 @@
 package com.hyk.shoppingstreet.service;
 
+import com.google.common.collect.Lists;
 import com.hyk.shoppingstreet.common.Status;
 import com.hyk.shoppingstreet.common.exception.BizException;
 import com.hyk.shoppingstreet.common.service.AbstractMapperService;
@@ -7,10 +8,12 @@ import com.hyk.shoppingstreet.common.utils.IdGenerator;
 import com.hyk.shoppingstreet.dao.AddressMapper;
 import com.hyk.shoppingstreet.model.Address;
 import com.hyk.shoppingstreet.service.query.AddressQuery;
+import com.hyk.shoppingstreet.service.vo.AddressVO;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -23,9 +26,15 @@ public class AddressService extends AbstractMapperService<Long, Address> {
   private AddressMapper addressMapper;
 
 
-  public List<Address> myList(Long uid) {
+  public List<AddressVO> myList(Long uid) {
     AddressQuery query = AddressQuery.builder().uid(uid).stateGte(1).build();
-    List<Address> res = findByQuery(query);
+    List<Address> addressList = findByQuery(query);
+    List<AddressVO> res = Lists.newArrayList();
+    addressList.forEach(address -> {
+      AddressVO addressVO = new AddressVO();
+      BeanUtils.copyProperties(address, addressVO);
+      res.add(addressVO);
+    });
     return res;
   }
 

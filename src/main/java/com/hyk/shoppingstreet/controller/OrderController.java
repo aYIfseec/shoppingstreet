@@ -3,7 +3,7 @@ package com.hyk.shoppingstreet.controller;
 import com.hyk.shoppingstreet.common.ReturnMsg;
 import com.hyk.shoppingstreet.common.utils.UserSessionThreadLocal;
 import com.hyk.shoppingstreet.controller.request.OrderAddRequest;
-import com.hyk.shoppingstreet.model.Order;
+import com.hyk.shoppingstreet.model.TradeOrder;
 import com.hyk.shoppingstreet.service.OrderService;
 import com.hyk.shoppingstreet.service.vo.OrderVO;
 import java.util.List;
@@ -46,7 +46,7 @@ public class OrderController {
       @RequestBody @Valid OrderAddRequest request
   ) {
     Long uid = UserSessionThreadLocal.getUserSession().getUid();
-    Order order = Order.builder().buyer(uid).build();
+    TradeOrder order = TradeOrder.builder().buyer(uid).build();
     BeanUtils.copyProperties(request, order);
     Boolean res = orderService.add(order, request.getCartIds());
 

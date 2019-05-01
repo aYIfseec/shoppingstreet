@@ -1,8 +1,8 @@
 package com.hyk.shoppingstreet.service.query;
 
 import com.hyk.shoppingstreet.common.repository.mybatis.AbstractQuery;
-import com.hyk.shoppingstreet.model.Order;
 import com.hyk.shoppingstreet.model.ShoppingCart.column;
+import com.hyk.shoppingstreet.model.TradeOrder;
 import lombok.Builder;
 import lombok.Data;
 import tk.mybatis.mapper.entity.Example.Criteria;
@@ -13,7 +13,7 @@ import tk.mybatis.mapper.entity.Example.Criteria;
  */
 @Data
 @Builder
-public class OrderQuery extends AbstractQuery<Order> {
+public class OrderQuery extends AbstractQuery<TradeOrder> {
 
   private Long uid;
   private Integer state;
