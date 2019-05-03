@@ -846,7 +846,8 @@
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.resCode == 0) {
-                    tableObj.reload();
+                    store.set("order_id", result.resData);
+                    window.location.href="BuyCar_Three.html";
                 } else {
                     alert(result.resMsg);
                 }

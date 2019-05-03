@@ -42,15 +42,17 @@ public class OrderController {
 
 
   @PostMapping("/add")
-  public ReturnMsg<Boolean> add(
-      @RequestBody @Valid OrderAddRequest request
+  public ReturnMsg<String> add(
+      @RequestBody OrderAddRequest request
   ) {
+    request.check();
+
     Long uid = UserSessionThreadLocal.getUserSession().getUid();
     TradeOrder order = TradeOrder.builder().buyer(uid).build();
     BeanUtils.copyProperties(request, order);
-    Boolean res = orderService.add(order, request.getCartIds());
+    Long res = orderService.add(order, request.getCartIds());
 
-    return ReturnMsg.createWithoutTotalCount(res);
+    return ReturnMsg.createWithoutTotalCount(res.toString());
   }
 
 

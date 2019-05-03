@@ -1,8 +1,8 @@
 package com.hyk.shoppingstreet.service.query;
 
 import com.hyk.shoppingstreet.common.repository.mybatis.AbstractQuery;
-import com.hyk.shoppingstreet.model.ShoppingCart.column;
 import com.hyk.shoppingstreet.model.TradeOrder;
+import com.hyk.shoppingstreet.model.TradeOrder.column;
 import lombok.Builder;
 import lombok.Data;
 import tk.mybatis.mapper.entity.Example.Criteria;
@@ -22,7 +22,7 @@ public class OrderQuery extends AbstractQuery<TradeOrder> {
   protected void addCondition(Criteria condition) {
 
     if (uid != null) {
-      condition.andEqualTo(column.uid, uid);
+      condition.andEqualTo(column.buyer, uid);
     }
 
     if (state != null) {

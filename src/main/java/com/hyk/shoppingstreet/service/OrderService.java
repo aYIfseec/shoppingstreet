@@ -80,7 +80,7 @@ public class OrderService extends AbstractMapperService<Long, TradeOrder> {
   }
 
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public Boolean add(TradeOrder order, List<Long> cartIds) {
+  public Long add(TradeOrder order, List<Long> cartIds) {
 
     List<ShoppingCart> shoppingCarts = preCheckAndClearCart(order.getBuyer(), cartIds);
 
@@ -108,7 +108,7 @@ public class OrderService extends AbstractMapperService<Long, TradeOrder> {
 //    notPayOrder.setCreateTime(new Date());
 //    notPayOrder.setModifyTime(new Date());
     orderMapper.insert(notPayOrder);
-    return true;
+    return orderId;
   }
 
   private List<OrderDetail> addBatch(Long orderId, List<ShoppingCart> shoppingCarts,

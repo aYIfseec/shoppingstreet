@@ -386,7 +386,7 @@
   <a class="layui-btn layui-btn-xs" lay-event="edit">保存更改</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<script>
+<script type="text/javascript">
 var tableObj;
 
   layui.use('table', function(){
@@ -398,17 +398,16 @@ var tableObj;
 
     tableObj = table.render({
       elem: '#address_table'
-      ,height: 312
       ,url: '/address/list' //数据接口
       ,where: {token: user.token, uid: user.uid}
       ,method: 'post'
       ,page: false //开启分页
       ,cols: [[ //表头
-        {field: 'kpName', title: '联系人', width:125, edit:true}
-        ,{field: 'kpPhone', title: '联系电话', width:125, edit:true}
-        ,{field: 'detail', title: '详细地址', width:255, edit:true} 
+        {field: 'kpName', title: '联系人', width:155, edit:true}
+        ,{field: 'kpPhone', title: '联系电话', width:155, edit:true}
+        ,{field: 'detail', title: '详细地址', width:365, edit:true} 
         ,{field: 'postCode', title: '邮编', width:125, edit:true} 
-        ,{fixed: 'right', title: '操作', width: 135, toolbar: '#toolbar'}
+        ,{fixed: 'right', title: '操作', width: 165, toolbar: '#toolbar'}
       ]]
       ,response: {
         statusName: 'resCode' //规定数据状态的字段名称，默认：code
@@ -463,14 +462,8 @@ var tableObj;
         });
     });
   } else if(layEvent === 'edit'){ //编辑
-    //do something
     console.log(obj.data);
     addressAddRequest(JSON.stringify(obj.data));
-    //同步更新缓存对应的值
-    // obj.update({
-    //   username: '123'
-    //   ,title: 'xxx'
-    // });
   }
 });
 
